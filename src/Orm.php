@@ -1,6 +1,6 @@
 <?php
 
-namespace Orm;
+namespace Pavlyshyn;
 
 class Orm {
 

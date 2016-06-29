@@ -1,11 +1,11 @@
 {
     "name": "pavlyshyn/orm",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "require": {
     },
     "autoload": {
         "psr-4": {
-            "": ""
+            "Pavlyshyn\\": "src/"
         }
     }
 }

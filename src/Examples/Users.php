@@ -1,8 +1,8 @@
 <?php
 
-namespace Examples;
+namespace Pavlyshyn\Examples;
 
-class Users extends \Model\Model {
+class Users extends \Pavlyshyn\Model {
 
     protected $id;
     protected $name;

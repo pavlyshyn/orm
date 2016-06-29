@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Orm\Orm;
-use Examples\Users;
+use Pavlyshyn\Orm;
+use Pavlyshyn\Examples\Users;
 
 $initialisation = Orm::init('localhost', 'test_orm', 'root', 'password');
 
