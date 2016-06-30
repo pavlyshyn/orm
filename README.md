@@ -1,5 +1,4 @@
 
-
 ######INSERT
 ```php
 $user = new Users();
@@ -8,6 +7,7 @@ $user->setMail('username@mail.com');
 $user->setPassword(sha1('password'));
 $orm->save($user);
 ```
+
 
 ######GET
 ```php
@@ -40,12 +40,14 @@ $users = new Users();
 $orm->delete($users, 'name', 'Username');
 ```
 
+
 ######COUNT
 ```php
 $users = new Users();
 $count = $orm->count($users);
 var_dump($count);
 ```
+
 
 ######EXIST (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 ```php
