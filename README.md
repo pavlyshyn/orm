@@ -3,13 +3,9 @@
 ###INSERT
 
 >$user = new Users();
-
 >$user->setName('Username');
-
 >$user->setMail('username@mail.com');
-
 >$user->setPassword(sha1('password'));
-
 >$orm->save($user);
 
 
