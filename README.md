@@ -25,10 +25,15 @@ var_dump($tabUsers);
 
 
 foreach($tabUsers as $user){
+
     echo 'Nom : ' . $user['name'] . '<br>';
+    
     echo 'Email : ' . $user['mail'] . '<br>';
+    
     echo 'Password : ' . $user['password'] . '<br>';
+    
     echo '----<br>';
+    
 }
 
 
