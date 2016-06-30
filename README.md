@@ -2,15 +2,15 @@
 
 ###INSERT
 
-$user = new Users();
+>$user = new Users();
 
-$user->setName('Username');
+>$user->setName('Username');
 
-$user->setMail('username@mail.com');
+>$user->setMail('username@mail.com');
 
-$user->setPassword(sha1('password'));
+>$user->setPassword(sha1('password'));
 
-$orm->save($user);
+>$orm->save($user);
 
 
 ###GET
