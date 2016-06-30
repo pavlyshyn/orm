@@ -2,73 +2,59 @@
 
 ###INSERT
 
->$user = new Users();
-
->$user->setName('Username');
-
->$user->setMail('username@mail.com');
-
->$user->setPassword(sha1('password'));
-
->$orm->save($user);
-
+```php
+$user = new Users();
+$user->setName('Username');
+$user->setMail('username@mail.com');
+$user->setPassword(sha1('password'));
+$orm->save($user);
+```
 
 ###GET
+```php
+$orm = new Orm();
+$users = new Users();
+$tabUsers = $orm->getAll($users);
 
->$orm = new Orm();
+var_dump($tabUsers);
 
->$users = new Users();
-
->$tabUsers = $orm->getAll($users);
-
->var_dump($tabUsers);
-
-
->foreach($tabUsers as $user){
-
->    echo 'Nom : ' . $user['name'] . '<br>';
-    
->    echo 'Email : ' . $user['mail'] . '<br>';
-    
->    echo 'Password : ' . $user['password'] . '<br>';
-    
->    echo '----<br>';
-    
->}
+foreach($tabUsers as $user){
+    echo 'Nom : ' . $user['name'] . '<br>';
+    echo 'Email : ' . $user['mail'] . '<br>';
+    echo 'Password : ' . $user['password'] . '<br>';
+}
+```
 
 
 ###DELETE BY ID
 
->$orm = new Orm();
-
->$users = new Users();
-
->$users->setId('40');
-
->$orm->deleteById($users);
-
+```php
+$orm = new Orm();
+$users = new Users();
+$users->setId('1');
+$orm->deleteById($users);
+```
 
 
 ###DELETE (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 
->$users = new Users();
-
->$orm->delete($users, 'name', 'pablo');
-
+```php
+$users = new Users();
+$orm->delete($users, 'name', 'Username');
+```
 
 ###COUNT
 
->$users = new Users();
-
->$count = $orm->count($users);
-
->var_dump($count);
-
+```php
+$users = new Users();
+$count = $orm->count($users);
+var_dump($count);
+```
 
 ###EXIST (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 
->$users = new Users();
-
->$res = $orm->exist($users, 'name', 'Username');
-
->var_dump($res);
+```php
+$users = new Users();
+$res = $orm->exist($users, 'name', 'Username');
+var_dump($res);
+```
