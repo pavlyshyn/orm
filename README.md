@@ -1,7 +1,6 @@
 
 
-###INSERT
-
+######INSERT
 ```php
 $user = new Users();
 $user->setName('Username');
@@ -10,7 +9,7 @@ $user->setPassword(sha1('password'));
 $orm->save($user);
 ```
 
-###GET
+######GET
 ```php
 $orm = new Orm();
 $users = new Users();
@@ -26,8 +25,7 @@ foreach($tabUsers as $user){
 ```
 
 
-###DELETE BY ID
-
+######DELETE BY ID
 ```php
 $orm = new Orm();
 $users = new Users();
@@ -36,23 +34,20 @@ $orm->deleteById($users);
 ```
 
 
-###DELETE (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
-
+######DELETE (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 ```php
 $users = new Users();
 $orm->delete($users, 'name', 'Username');
 ```
 
-###COUNT
-
+######COUNT
 ```php
 $users = new Users();
 $count = $orm->count($users);
 var_dump($count);
 ```
 
-###EXIST (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
-
+######EXIST (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 ```php
 $users = new Users();
 $res = $orm->exist($users, 'name', 'Username');
