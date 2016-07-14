@@ -104,8 +104,8 @@ class Orm {
         $req = self::$connection->prepare($query);
         $req->execute();
         return $req->fetch();
-    }
-
+            }
+        
     public function getAll($object) {
         $tableName = $object->getTableName();
         

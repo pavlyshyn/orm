@@ -12,14 +12,14 @@ $orm = new Orm();
 
 // INSERT
 /*
-$user = new Users();
-$user->setId(1);
-$user->setName('Username1');
-$user->setMail('username@mail.com');
-$user->setPassword(sha1('password'));
-$orm->save($user);
+  $user = new Users();
+  $user->setId(1);
+  $user->setName('Username1');
+  $user->setMail('username@mail.com');
+  $user->setPassword(sha1('password'));
+  $orm->save($user);
 
-*/
+ */
 
 
 $user = new Users();
