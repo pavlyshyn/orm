@@ -9,7 +9,7 @@ class Users extends \Pavlyshyn\Model {
     protected $mail;
     protected $password;
 
-    public function getTableNameBdd() {
+    public function getTableName() {
         return 'users';
     }
 
