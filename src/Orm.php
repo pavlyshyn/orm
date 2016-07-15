@@ -39,14 +39,36 @@ class Orm {
 
     public function get($object) {
         $tableName = $object->getTableName();
-
-        return $this->driver->get($tableName, $object->getId());
+        
+        $data = $this->driver->get($tableName, $object->getId());
+        
+        foreach($data as $k=>$v) {
+            $method = 'set'.ucfirst($k);
+            $object->{$method}($data->$k);
+        }
+        
+        return $object;
     }
 
     public function getAll($object) {
         $tableName = $object->getTableName();
-
-        return $this->driver->getAll($tableName);
+        
+        $dataArray = $this->driver->getAll($tableName);
+        
+        $className = get_class($object);
+        $res = [];
+        $i=0;
+        foreach($dataArray as &$data) {
+            $res[$i] = new $className();
+            
+            foreach($data as $k=>$v) {
+                $method = 'set'.ucfirst($k);
+                $res[$i]->{$method}($data->$k);
+            }
+            $i++;
+        }
+        
+        return $res;
     }
 
     public function deleteById($object) {
@@ -85,5 +107,4 @@ class Orm {
 
         return (!$res) ? false : true;
     }
-
 }

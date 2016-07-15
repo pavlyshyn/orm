@@ -6,11 +6,11 @@ class MySQL implements \Pavlyshyn\DB\Driver {
 
     public $connection = NULL;
 
-    public function __construct($host, $db, $user, $password) {
+    public function __construct($host, $db, $user, $password, $character='utf8') {
         try {
-            $this->connection = new \PDO('mysql:host=' . $host . ';dbname=' . $db . ';charset=UTF8', $user, $password);
+            $this->connection = new \PDO('mysql:host=' . $host . ';dbname=' . $db . ';charset='.$character, $user, $password);
 
-            $this->connection->query('SET NAMES utf8;');
+            $this->connection->query('SET NAMES '.$character.';');
         } catch (Pavlyshyn\Exception $e) {
             echo 'Error connection (' . $e->getCode() . '): ', $e->getMessage(), "\n";
         }
@@ -21,7 +21,7 @@ class MySQL implements \Pavlyshyn\DB\Driver {
         $query = 'SELECT * FROM `' . $tableName . '` WHERE id = ' . $id;
         $req = $this->connection->prepare($query);
         $req->execute();
-        return $req->fetch();
+        return $req->fetchObject();
     }
 
     public function getAll($tableName) {
@@ -30,7 +30,7 @@ class MySQL implements \Pavlyshyn\DB\Driver {
         $req = $this->connection->prepare($query);
         $req->execute();
 
-        return $req->fetchAll();
+        return $req->fetchAll(\PDO::FETCH_OBJ);
     }
 
     public function update($tableName, array $props) {

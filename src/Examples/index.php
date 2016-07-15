@@ -24,4 +24,11 @@ $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 ///*
 $user = new Users();
 echo $orm->count($user);
+
+$user->setId(2);
+print_r($orm->get($user));
+
+
+print_r($orm->getAll($user));
+
 //*/

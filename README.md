@@ -27,9 +27,9 @@ $tabUsers = $orm->getAll($users);
 var_dump($tabUsers);
 
 foreach($tabUsers as $user){
-    echo 'Name : ' . $user['name'] . '<br>';
-    echo 'Email : ' . $user['mail'] . '<br>';
-    echo 'Password : ' . $user['password'] . '<br>';
+    echo 'Name : ' . $user->getName() . '<br>';
+    echo 'Email : ' . $user->getMail() . '<br>';
+    echo 'Password : ' . $user->getPassword() . '<br>';
 }
 ```
 
