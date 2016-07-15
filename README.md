@@ -1,4 +1,14 @@
 
+
+```php
+use Pavlyshyn\Orm;
+use Pavlyshyn\Examples\Users;
+use Pavlyshyn\DB\MySQL;
+
+$orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
+```
+
+
 ######INSERT
 ```php
 $user = new Users();
@@ -11,7 +21,6 @@ $orm->save($user);
 
 ######GET
 ```php
-$orm = new Orm();
 $users = new Users();
 $tabUsers = $orm->getAll($users);
 
@@ -27,7 +36,6 @@ foreach($tabUsers as $user){
 
 ######DELETE BY ID
 ```php
-$orm = new Orm();
 $users = new Users();
 $users->setId('1');
 $orm->deleteById($users);

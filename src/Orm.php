@@ -4,29 +4,22 @@ namespace Pavlyshyn;
 
 class Orm {
 
-    private static $connection = NULL;
+    private $driver = null;
 
-    public static function init($host, $db, $user, $password) {
-        try {
-            self::$connection = new \PDO('mysql:host=' . $host . ';dbname=' . $db . ';charset=UTF8', $user, $password);
-
-            self::$connection->query('SET NAMES utf8;');
-        } catch (Pavlyshyn\Exception $e) {
-            echo 'Error connection ('.$e->getCode().'): ', $e->getMessage(), "\n";
-        }
-    }
-
-    public static function getConnection() {
-        return self::$connection;
+    public function __construct(\Pavlyshyn\DB\Driver $driver) {
+        $this->driver = $driver;
     }
 
     public function save($object) {
-        if ($this->exist($object, 'id', $object->getId()) === false) {
-            $res = $this->insert($object);
-        } else {
-            $res = $this->update($object);
-        }
+        $tableName = $object->getTableName();
+        $props = $object->getProperties();
         
+        if ($this->exist($object, 'id', $object->getId()) === false) {
+            $res = $this->driver->insert($tableName, $props);
+        } else {
+            $res = $this->driver->update($tableName, $props);
+        }
+
         return $res;
     }
 
@@ -34,125 +27,62 @@ class Orm {
         $tableName = $object->getTableName();
         $props = $object->getProperties();
 
-        $tabFields = 'INSERT INTO `' . $tableName . '` (';
-        $tabFields2 = '';
-
-        $i = 0;
-        $count = count($props);
-        foreach ($props as $key => $value) {
-            $tabFields .= '`' . $key . '`';
-            $i++;
-            if ($i != $count) {
-                $tabFields .= ',';
-            }
-        }
-
-        $i = 0;
-        foreach ($props as $key => $value) {
-            $i++;
-            if ($key != 'id') {
-                $tabFields2 .= '\'' . $value . '\'';
-                if ($i != $count) {
-                    $tabFields2 .= ', ';
-                }
-            }
-        }
-
-        $finalRequest = $tabFields . ') VALUES (NULL,' . $tabFields2 . ')';
-        $query = $finalRequest;
-        $req = self::$connection->prepare($query);
-        
-        return $req->execute();
+        return $this->driver->insert($tableName, $props);
     }
 
     public function update($object) {
         $tableName = $object->getTableName();
         $props = $object->getProperties();
-        
-        $tabFields = 'UPDATE `' . $tableName . '` SET ';
 
-        $i = 0;
-        $count = count($props);
-        foreach ($props as $key => $value) {
-            $i++;
-            if ($key != 'id') {
-                $tabFields .= "`" . $key . '`=\'' . $value . '\'';
-                if ($i != $count) {
-                    $tabFields .= ',';
-                }
-            }
-        }
-
-        $tabFields2 = ' WHERE `id`=';
-        foreach ($props as $key => $value) {
-            if ($key === 'id') {
-                $tabFields2 .= '\'' . $value . '\'';
-            }
-        }
-
-        $finalRequest = $tabFields . $tabFields2;
-        $query = $finalRequest;
-        $req = self::$connection->prepare($query);
-        
-        return $req->execute();
+        return $this->driver->update($tableName, $props);
     }
 
-    public function get(&$object) {
+    public function get($object) {
         $tableName = $object->getTableName();
-        
-        $query = 'SELECT * FROM `' . $tableName . '` WHERE id = ' . $object->getId();
-        $req = self::$connection->prepare($query);
-        $req->execute();
-        return $req->fetch();
-            }
-        
+
+        return $this->driver->get($tableName, $object->getId());
+    }
+
     public function getAll($object) {
         $tableName = $object->getTableName();
-        
-        $query = 'SELECT * FROM `' . $tableName . '`';
-        $req = self::$connection->prepare($query);
-        $req->execute();
-        
-        return $req->fetchAll();
+
+        return $this->driver->getAll($tableName);
     }
 
     public function deleteById($object) {
         $tableName = $object->getTableName();
         
-        $query = 'DELETE FROM `' . $tableName . '` WHERE id = ' . $object->getId();
-        $req = self::$connection->prepare($query);
-        
-        return $req->execute();
+        return $this->driver->deleteById($tableName, $object->getId());
     }
 
     public function delete($object, $rowname, $value) {
         $tableName = $object->getTableName();
-        
+
         $query = 'DELETE FROM `' . $tableName . '` WHERE `' . "$rowname" . '` = ' . '\'' . $value . '\'';
-        $req = self::$connection->prepare($query);
-        
+        $req = $this->driver->connection->prepare($query);
+
         return $req->execute();
     }
 
     public function count($object) {
         $tableName = $object->getTableName();
-        
+
         $query = 'SELECT COUNT(*) as count FROM ' . $tableName;
-        $req = self::$connection->prepare($query);
+        $req = $this->driver->connection->prepare($query);
         $req->execute();
         $res = $req->fetch();
-        
+
         return $res['count'];
     }
 
     public function exist($object, $rowname, $value) {
         $tableName = $object->getTableName();
-        
+
         $query = 'SELECT * FROM `' . $tableName . '` WHERE `' . $rowname . '` = ' . '\'' . $value . '\'';
-        $req = self::$connection->prepare($query);
+        $req = $this->driver->connection->prepare($query);
         $req->execute();
         $res = $req->fetchAll();
-        
+
         return (!$res) ? false : true;
     }
 
