@@ -19,6 +19,21 @@ $orm->save($user);
 ```
 
 
+
+######UPDATE
+```php
+//get user
+$user = new Users();
+$user->setId(1);
+$user = $orm->get($user);
+
+//update
+$user->setPassword(sha1('new password'));
+$orm->save($user);
+```
+
+
+
 ######GET
 ```php
 $users = new Users();
