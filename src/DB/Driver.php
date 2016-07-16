@@ -13,4 +13,10 @@ interface Driver {
     public function insert($tableName, array $object);
 
     public function deleteById($tableName, $id);
+    
+    public function delete($tableName, $rowname, $value);
+    
+    public function count($tableName);
+    
+    public function exist($object, $rowname, $value);
 }

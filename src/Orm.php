@@ -79,32 +79,19 @@ class Orm {
 
     public function delete($object, $rowname, $value) {
         $tableName = $object->getTableName();
-
-        $query = 'DELETE FROM `' . $tableName . '` WHERE `' . "$rowname" . '` = ' . '\'' . $value . '\'';
-        $req = $this->driver->connection->prepare($query);
-
-        return $req->execute();
+        
+        return $this->driver->delete($tableName, $rowname, $value);
     }
 
     public function count($object) {
         $tableName = $object->getTableName();
 
-        $query = 'SELECT COUNT(*) as count FROM ' . $tableName;
-        $req = $this->driver->connection->prepare($query);
-        $req->execute();
-        $res = $req->fetch();
-
-        return $res['count'];
+        return $this->driver->count($tableName);
     }
 
     public function exist($object, $rowname, $value) {
         $tableName = $object->getTableName();
 
-        $query = 'SELECT * FROM `' . $tableName . '` WHERE `' . $rowname . '` = ' . '\'' . $value . '\'';
-        $req = $this->driver->connection->prepare($query);
-        $req->execute();
-        $res = $req->fetchAll();
-
-        return (!$res) ? false : true;
+        return $this->driver->exist($tableName, $rowname, $value);
     }
 }

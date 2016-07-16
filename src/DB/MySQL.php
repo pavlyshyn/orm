@@ -6,13 +6,13 @@ class MySQL implements \Pavlyshyn\DB\Driver {
 
     public $connection = NULL;
 
-    public function __construct($host, $db, $user, $password, $character='utf8') {
+    public function __construct($host, $db, $user, $password, $character = 'utf8') {
         try {
-            $this->connection = new \PDO('mysql:host=' . $host . ';dbname=' . $db . ';charset='.$character, $user, $password);
+            $this->connection = new \PDO('mysql:host=' . $host . ';dbname=' . $db . ';charset=' . $character, $user, $password);
 
-            $this->connection->query('SET NAMES '.$character.';');
+            $this->connection->query('SET NAMES ' . $character . ';');
         } catch (Pavlyshyn\Exception $e) {
-            echo 'Error connection (' . $e->getCode() . '): ', $e->getMessage(), "\n";
+            echo 'Error MySQL connection (' . $e->getCode() . '): ', $e->getMessage(), "\n";
         }
     }
 
@@ -99,9 +99,37 @@ class MySQL implements \Pavlyshyn\DB\Driver {
     public function deleteById($tableName, $id) {
 
         $query = 'DELETE FROM `' . $tableName . '` WHERE id = ' . $id;
-        $req = self::$connection->prepare($query);
+        $req = $this->connection->prepare($query);
+
+        return $req->execute();
+    }
+    
+    public function delete($tableName, $rowname, $value) {
+
+        $query = 'DELETE FROM `' . $tableName . '` WHERE `' . "$rowname" . '` = ' . '\'' . $value . '\'';
+        $req = $this->driver->connection->prepare($query);
 
         return $req->execute();
     }
 
+    public function count($tableName) {
+
+        $query = 'SELECT COUNT(*) as count FROM ' . $tableName;
+        $req = $this->connection->prepare($query);
+        $req->execute();
+        $res = $req->fetch();
+
+        return $res['count'];
+    }
+
+
+    public function exist($tableName, $rowname, $value) {
+
+        $query = 'SELECT * FROM `' . $tableName . '` WHERE `' . $rowname . '` = ' . '\'' . $value . '\'';
+        $req = $this->connection->prepare($query);
+        $req->execute();
+        $res = $req->fetchAll();
+
+        return (!$res) ? false : true;
+    }
 }
