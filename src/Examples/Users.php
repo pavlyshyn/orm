@@ -2,16 +2,16 @@
 
 namespace Pavlyshyn\Examples;
 
+
+/**
+ * @tableName users
+ */
 class Users extends \Pavlyshyn\Model {
 
     protected $id;
     protected $name;
     protected $mail;
     protected $password;
-
-    public function getTableName() {
-        return 'users';
-    }
 
     public function setId($id) {
         return $this->id = $id;

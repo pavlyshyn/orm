@@ -19,8 +19,8 @@ $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
   $user->setPassword(sha1('password'));
   $orm->save($user);
 
- //*/
-
+//*/
+  
 ///*
 $user = new Users();
 echo $orm->count($user);
