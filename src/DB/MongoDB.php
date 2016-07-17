@@ -31,11 +31,25 @@ class MongoDB implements \Pavlyshyn\DB\Driver {
     }
 
     public function get($collection, $id) {
-        
+        $data = $this->selectCollection($collection)->findOne(['_id' => $id]);
+
+        return $data;
     }
 
-    public function getAll($collection) {
-        
+    public function getAll($collection, $limit = 1000, $startId = null) {
+
+        $page = (!$startId) ? 1 : ($startId / $limit);
+
+        $result = array();
+        $c = $this->selectCollection($collection);
+
+        $cursor = $c->find()->skip(($page - 1) * $limit)->limit($limit);
+
+        foreach ($cursor as $doc) {
+            $result[] = $doc;
+        }
+
+        return $result;
     }
 
     public function update($collection, array $object) {
@@ -57,7 +71,7 @@ class MongoDB implements \Pavlyshyn\DB\Driver {
     public function deleteById($collection, $id) {
         
     }
-    
+
     public function delete($tableName, $rowname, $value) {
         
     }
@@ -79,8 +93,9 @@ class MongoDB implements \Pavlyshyn\DB\Driver {
             return $c;
         }
     }
-    
+
     public function exist($tableName, $rowname, $value) {
         
     }
+
 }
