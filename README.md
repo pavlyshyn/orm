@@ -6,6 +6,9 @@ use Pavlyshyn\Examples\Users;
 use Pavlyshyn\DB\MySQL;
 
 $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
+
+
+$orm = new Orm(new MongoDB('localhost', 'test_orm'));
 ```
 
 
