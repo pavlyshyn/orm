@@ -4,16 +4,11 @@ namespace Pavlyshyn;
 
 class Model {
 
-    public function __construct($where = NULL) {
-        if (is_numeric($where)) {
-            echo 'int';
-        } elseif (is_array($where)) {
-            echo 'array';
-        }
-    }
+    use \Pavlyshyn\Data\Getter,
+        \Pavlyshyn\Data\Setter;
 
     public function getProperties() {
         return get_object_vars($this);
     }
-    
+
 }

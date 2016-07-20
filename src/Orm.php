@@ -11,11 +11,12 @@ class Orm {
 
     public function __construct(\Pavlyshyn\DB\Driver $driver) {
         $this->driver = $driver;
-        $this->reader = new Reader();
     }
 
     public function getTableName($object) {
+        $this->reader = Reader::getInstance();
         $t = $this->reader->init(get_class($object));
+
         return $t->getParameter('tableName');
     }
 
@@ -23,7 +24,7 @@ class Orm {
         $tableName = $this->getTableName($object);
         $props = $object->getProperties();
 
-        if ($this->exist($object, 'id', $object->getId()) === false) {
+        if ($this->exist($object, $this->driver->id, $object->getId()) === false) {
             $res = $this->driver->insert($tableName, $props);
         } else {
             $res = $this->driver->update($tableName, $props);
@@ -52,8 +53,7 @@ class Orm {
         $data = $this->driver->get($tableName, $object->getId());
 
         foreach ($data as $k => $v) {
-            $method = 'set' . ucfirst($k);
-            $object->{$method}($data->$k);
+            $object->$k = $data->$k;
         }
 
         return $object;
@@ -70,8 +70,7 @@ class Orm {
             $res[$i] = new $className();
 
             foreach ($data as $k => $v) {
-                $method = 'set' . ucfirst($k);
-                $res[$i]->{$method}($data->$k);
+                $res[$i]->$k = $data->$k;
             }
             $i++;
         }
