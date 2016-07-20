@@ -7,7 +7,9 @@ use Model\User;
 
 $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 
+OR 
 
+use Pavlyshyn\DB\Driver\MongoDB;
 $orm = new Orm(new MongoDB('localhost', 'test_orm'));
 ```
 
