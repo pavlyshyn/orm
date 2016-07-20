@@ -2,8 +2,8 @@
 
 ```php
 use Pavlyshyn\Orm;
-use Pavlyshyn\Examples\Users;
-use Pavlyshyn\DB\MySQL;
+use Pavlyshyn\DB\Driver\MySQL;
+use Model\User;
 
 $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 ```
