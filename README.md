@@ -2,8 +2,8 @@
 
 ```php
 use Pavlyshyn\Orm;
-use Pavlyshyn\Examples\Users;
-use Pavlyshyn\DB\MySQL;
+use Pavlyshyn\DB\Driver\MySQL;
+use Model\User;
 
 $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 
@@ -22,7 +22,7 @@ use \Pavlyshyn\Model;
 /**
  * @tableName users
  */
-class Users extends Model {
+class User extends Model {
 
     protected $id;
     protected $name;
@@ -67,7 +67,7 @@ class Users extends Model {
 
 ######INSERT
 ```php
-$user = new Users();
+$user = new User();
 $user->name = 'Username';
 $user->mail = 'username@mail.com';
 $user->password = sha1('password');
@@ -79,7 +79,7 @@ $orm->save($user);
 ######UPDATE
 ```php
 //get user
-$user = new Users();
+$user = new User();
 $user->id = 1;
 $user = $orm->get($user);
 
@@ -92,7 +92,7 @@ $orm->save($user);
 
 ######GET
 ```php
-$users = new Users();
+$users = new User();
 $tabUsers = $orm->getAll($users);
 
 var_dump($tabUsers);
@@ -107,7 +107,7 @@ foreach($tabUsers as $user){
 
 ######DELETE BY ID
 ```php
-$users = new Users();
+$users = new User();
 $user->id = 1;
 $orm->deleteById($users);
 ```
@@ -115,14 +115,14 @@ $orm->deleteById($users);
 
 ######DELETE (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 ```php
-$users = new Users();
+$users = new User();
 $orm->delete($users, 'name', 'Username');
 ```
 
 
 ######COUNT
 ```php
-$users = new Users();
+$users = new User();
 $count = $orm->count($users);
 var_dump($count);
 ```
@@ -130,7 +130,7 @@ var_dump($count);
 
 ######EXIST (PARAMETERS $OBJECT, $ROWNAME AND $VALUE)
 ```php
-$users = new Users();
+$users = new User();
 $res = $orm->exist($users, 'name', 'Username');
 var_dump($res);
 ```
