@@ -12,9 +12,9 @@ $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 ######INSERT
 ```php
 $user = new Users();
-$user->setName('Username');
-$user->setMail('username@mail.com');
-$user->setPassword(sha1('password'));
+$user->name = 'Username';
+$user->mail = 'username@mail.com';
+$user->password = sha1('password');
 $orm->save($user);
 ```
 
@@ -24,11 +24,11 @@ $orm->save($user);
 ```php
 //get user
 $user = new Users();
-$user->setId(1);
+$user->id = 1;
 $user = $orm->get($user);
 
 //update
-$user->setPassword(sha1('new password'));
+$user->password = sha1('new password');
 $orm->save($user);
 ```
 
@@ -42,9 +42,9 @@ $tabUsers = $orm->getAll($users);
 var_dump($tabUsers);
 
 foreach($tabUsers as $user){
-    echo 'Name : ' . $user->getName() . '<br>';
-    echo 'Email : ' . $user->getMail() . '<br>';
-    echo 'Password : ' . $user->getPassword() . '<br>';
+    echo 'Name : ' . $user->name . '<br>';
+    echo 'Email : ' . $user->mail . '<br>';
+    echo 'Password : ' . $user->password . '<br>';
 }
 ```
 
@@ -52,7 +52,7 @@ foreach($tabUsers as $user){
 ######DELETE BY ID
 ```php
 $users = new Users();
-$users->setId('1');
+$user->id = 1;
 $orm->deleteById($users);
 ```
 
