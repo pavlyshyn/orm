@@ -15,7 +15,6 @@ use \Model\Users;
 
 //$orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 
-$orm = new Orm(new SQLite('test_orm.sqlite'));
 
 
 // INSERT
