@@ -6,8 +6,6 @@ use Pavlyshyn\Data\Type;
 
 class Float extends Type {
 
-    protected $min, $max;
-
     public function __construct($name) {
         parent::__construct($name);
     }
