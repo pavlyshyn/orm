@@ -48,7 +48,7 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $finalRequest = $tabFields . $tabFields2 . ';';
         $query = $finalRequest;
         $req = $this->connection->prepare($query);
-
+        
         return $req->execute();
     }
 
@@ -59,8 +59,16 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $i = 0;
         $count = count($props);
         foreach ($props as $key => $value) {
+            
             $tabFields .= '' . $key . '';
-            $tabFields2 .= '\'' . $value . '\'';
+            
+            if ($key === $this->id) {
+                $tabFields2 .= 'NULL';
+            }
+            else {
+                $tabFields2 .= '\'' . $value . '\'';
+            }
+            
             $i++;
             if ($i != $count) {
                 $tabFields .= ',';
@@ -72,6 +80,8 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $query = $finalRequest;
         $req = $this->connection->prepare($query);
 
+        echo $query;
+        
         return $req->execute();
     }
 
@@ -90,7 +100,7 @@ class SQL implements \Pavlyshyn\DB\Driver {
     }
 
     public function count($tableName) {
-        $query = 'SELECT COUNT(*) as count FROM ' . $tableName;
+        $query = 'SELECT COUNT('.$this->id.') as count FROM ' . $tableName;
         $req = $this->connection->prepare($query);
         $req->execute();
         $res = $req->fetch();
@@ -99,7 +109,7 @@ class SQL implements \Pavlyshyn\DB\Driver {
     }
 
     public function exist($tableName, $rowname, $value) {
-        $query = 'SELECT * FROM ' . $tableName . ' WHERE ' . $rowname . ' = ' . '\'' . $value . '\';';
+        $query = 'SELECT '.$this->id.' FROM ' . $tableName . ' WHERE ' . $rowname . ' = ' . '\'' . $value . '\';';
         $req = $this->connection->prepare($query);
         $req->execute();
         $res = $req->fetchAll();

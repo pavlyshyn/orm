@@ -22,15 +22,15 @@ $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 ///*
 $user = new Users();
 $user->id = 3;
-$user->name = 'Username4';
+$user->name = 'Username11';
 $user->mail = 'username@mail.com';
 $user->password = sha1('password');
 $orm->save($user);
  
 //*/
  
-//$user = new Users();
-//echo $orm->count($user); 
+$user = new Users();
+echo $orm->count($user); 
 
 //$user->setId(3);
 //print_r($orm->get($user));

@@ -13,6 +13,7 @@ class Model {
 
     public function getProperties() {
         $parameters = get_object_vars($this);
+        unset($parameters['props']);
         return $parameters;
     }
 
