@@ -25,13 +25,10 @@ class Orm {
     }
 
     public function save($object) {
-        $tableName = $this->getTableName($object);
-        $props = $object->getProperties();
-
         if ($this->exist($object, $this->driver->id, $object->getId()) === false) {
-            $res = $this->driver->insert($tableName, $props);
+            $res = $this->insert($object);
         } else {
-            $res = $this->driver->update($tableName, $props);
+            $res = $this->update($object);
         }
 
         return $res;
@@ -54,7 +51,7 @@ class Orm {
     public function get($object) {
         $tableName = $this->getTableName($object);
         $props = $object->getProperties();
-
+        
         $data = $this->driver->get($tableName, $object->getId());
 
         if ($data) {

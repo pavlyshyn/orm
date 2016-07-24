@@ -9,23 +9,25 @@ class Model {
     use \Pavlyshyn\Data\Getter,
         \Pavlyshyn\Data\Setter;
 
-    private $props = [];
+    private $fields = [];
 
     public function getProperties() {
         $parameters = get_object_vars($this);
-        unset($parameters['props']);
+        unset($parameters['fields']);
         return $parameters;
     }
 
     public function getProps() {
         $parameters = get_object_vars($this);
         $reader = Reader::getInstance();
-
+        
+        $this->fields = [];
+        
         foreach ($parameters as $k => $v) {
-            if ($k != 'props') {
+            if ($k != 'fields') {
                 $t = $reader->init(get_class($this), $k);
 
-                $this->props[] = [
+                $this->fields[] = [
                     'field' => $k,
                     'value' => $v,
                     'type' => $t->getParameter('var')
@@ -33,7 +35,7 @@ class Model {
             }
         }
 
-        return $this->props;
+        return $this->fields;
     }
 
 }
