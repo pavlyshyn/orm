@@ -4,21 +4,17 @@ namespace Pavlyshyn\Data\Type;
 
 use Pavlyshyn\Data\Type;
 
-class Float extends Type {
+class Entity extends Type {
 
     public function __construct($name) {
         parent::__construct($name);
     }
 
     public function sanitize($value) {
-        if (!is_scalar($value)) {
-            return null;
-        }
-
-        if (gettype($value) === "float") {
+        if ($value instanceof Pavlyshyn\Model) {
             return $value;
         } else {
-            return (preg_match("/^\\d+\\.\\d+$/", $value) === 1) ? $value : null;
+            return null;
         }
     }
 
