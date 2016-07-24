@@ -20,7 +20,7 @@ class Datetime extends Type {
         }
 
         if (!$value instanceof \DateTime) {
-            $value = new DateTime($value);
+            $value = new \DateTime($value);
         }
 
         return $value->format($this->format);

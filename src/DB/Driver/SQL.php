@@ -72,9 +72,6 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $query = $finalRequest;
         $req = $this->connection->prepare($query);
 
-        echo $query;
-
-
         return $req->execute();
     }
 

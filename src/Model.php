@@ -3,12 +3,15 @@
 namespace Pavlyshyn;
 
 class Model {
-
+    
     use \Pavlyshyn\Data\Getter,
         \Pavlyshyn\Data\Setter;
 
     public function getProperties() {
-        return get_object_vars($this);
+        $parameters = get_object_vars($this);
+        
+        // todo: add types
+        
+        return $parameters;
     }
-
 }

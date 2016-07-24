@@ -16,7 +16,7 @@ class Orm {
     public function getDriver() {
         return $this->driver;
     }
-    
+
     public function getTableName($object) {
         $this->reader = Reader::getInstance();
         $t = $this->reader->init(get_class($object));
@@ -53,21 +53,23 @@ class Orm {
 
     public function get($object) {
         $tableName = $this->getTableName($object);
+        $props = $object->getProperties();
 
         $data = $this->driver->get($tableName, $object->getId());
-        
-        if($data) {
+
+        if ($data) {
             foreach ($data as $k => $v) {
                 $object->$k = $data->$k;
             }
         }
-        
+
         return $object;
     }
 
     public function getAll($object) {
         $tableName = $this->getTableName($object);
         $dataArray = $this->driver->getAll($tableName);
+        $props = $object->getProperties();
 
         $className = get_class($object);
         $res = [];
