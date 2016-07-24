@@ -19,7 +19,7 @@ $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 
 
 // INSERT
-/*
+///*
 $user = new Users();
 $user->id = 3;
 $user->name = 'Username4';
@@ -27,13 +27,13 @@ $user->mail = 'username@mail.com';
 $user->password = sha1('password');
 $orm->save($user);
  
-*/
+//*/
  
-$user = new Users();
-echo $orm->count($user); 
+//$user = new Users();
+//echo $orm->count($user); 
 
-$user->setId(3);
-print_r($orm->get($user));
+//$user->setId(3);
+//print_r($orm->get($user));
 
 
 //print_r($orm->getAll($user));
