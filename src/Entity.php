@@ -4,7 +4,7 @@ namespace Pavlyshyn;
 
 use Pavlyshyn\Annotation as Reader;
 
-class Model {
+class Entity {
 
     use \Pavlyshyn\Data\Getter,
         \Pavlyshyn\Data\Setter;

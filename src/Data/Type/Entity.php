@@ -11,7 +11,7 @@ class Entity extends Type {
     }
 
     public function sanitize($value) {
-        if ($value instanceof Pavlyshyn\Model) {
+        if ($value instanceof \Pavlyshyn\Entity) {
             return $value;
         } else {
             return null;

@@ -2,12 +2,12 @@
 
 namespace Model;
 
-use Pavlyshyn\Model;
+use Pavlyshyn\Entity;
 
 /**
  * @tableName users
  */
-class Users extends Model {
+class Users extends Entity {
 
     /**
      * @var integer

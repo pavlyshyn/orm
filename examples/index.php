@@ -21,7 +21,7 @@ $orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
 // INSERT
 ///*
 $user = new Users();
-$user->id = 'df3sd';
+//$user->id = 4;
 $user->name = 'Username11';
 $user->mail = 'username@mail.com';
 $user->password = sha1('password');
