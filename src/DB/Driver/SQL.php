@@ -32,7 +32,7 @@ class SQL implements \Pavlyshyn\DB\Driver {
         foreach ($props as $key => $value) {
             $i++;
             if ($key != $this->id) {
-                $tabFields .= '' . $key . ' = \'' . $value . '\'';
+                $tabFields .= '' . $key . ' = :' . $key;
                 if ($i != $count) {
                     $tabFields .= ',';
                 }
@@ -42,13 +42,17 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $tabFields2 = ' WHERE ' . $this->id . '=';
         foreach ($props as $key => $value) {
             if ($key === $this->id) {
-                $tabFields2 .= '\'' . $value . '\'';
+                $tabFields2 .= ':' . $key;
             }
         }
 
         $finalRequest = $tabFields . $tabFields2 . ';';
         $query = $finalRequest;
         $req = $this->connection->prepare($query);
+
+        foreach ($props as $key => $value) {
+            $req->bindValue(':' . $key, $value);
+        }
 
         return $req->execute();
     }
@@ -66,7 +70,7 @@ class SQL implements \Pavlyshyn\DB\Driver {
             if ($key === $this->id) {
                 $tabFields2 .= 'NULL';
             } else {
-                $tabFields2 .= '\'' . $value . '\'';
+                $tabFields2 .= '\':' . $key . '\'';
             }
 
             $i++;
@@ -80,6 +84,10 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $query = $finalRequest;
         $req = $this->connection->prepare($query);
 
+        foreach ($props as $key => $value) {
+            $req->bindValue(':' . $key, $value);
+        }
+
         return $req->execute();
     }
 
@@ -92,8 +100,9 @@ class SQL implements \Pavlyshyn\DB\Driver {
     }
 
     public function delete($tableName, $rowname, $value) {
-        $query = 'DELETE FROM ' . $tableName . ' WHERE ' . "$rowname" . ' = ' . '\'' . $value . '\';';
+        $query = 'DELETE FROM ' . $tableName . ' WHERE ' . $rowname . ' = ' . ':' . $rowname . '\';';
         $req = $this->driver->connection->prepare($query);
+        $req->bindValue(':' . $rowname, $value);
 
         return $req->execute();
     }
@@ -108,8 +117,9 @@ class SQL implements \Pavlyshyn\DB\Driver {
     }
 
     public function exist($tableName, $rowname, $value) {
-        $query = 'SELECT ' . $this->id . ' FROM ' . $tableName . ' WHERE ' . $rowname . ' = ' . '\'' . $value . '\';';
+        $query = 'SELECT ' . $this->id . ' FROM ' . $tableName . ' WHERE ' . $rowname . ' = ' . ':' . $rowname . ';';
         $req = $this->connection->prepare($query);
+        $req->bindValue(':' . $rowname, $value);
         $req->execute();
         $res = $req->fetchAll();
 
