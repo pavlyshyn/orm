@@ -3,6 +3,7 @@
 namespace Pavlyshyn\Data\Type;
 
 use Pavlyshyn\Data\Type;
+use \Pavlyshyn\Entity;
 
 class Entity extends Type {
 
@@ -11,7 +12,7 @@ class Entity extends Type {
     }
 
     public function sanitize($value) {
-        if ($value instanceof \Pavlyshyn\Entity) {
+        if ($value instanceof Entity) {
             return $value;
         } else {
             return null;

@@ -17,7 +17,7 @@ class MongoDB implements Transaction {
     }
 
     public function commit() {
-        return $this->dm->flush();
+        return $this->tm->flush();
     }
 
     public function rollBack() {

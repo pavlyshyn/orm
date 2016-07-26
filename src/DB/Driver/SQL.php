@@ -2,6 +2,8 @@
 
 namespace Pavlyshyn\DB\Driver;
 
+use \PDO;
+
 class SQL implements \Pavlyshyn\DB\Driver {
 
     public $id = 'id';
@@ -21,7 +23,7 @@ class SQL implements \Pavlyshyn\DB\Driver {
         $req = $this->connection->prepare($query);
         $req->execute();
 
-        return $req->fetchAll(\PDO::FETCH_OBJ);
+        return $req->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function update($tableName, array $props) {
