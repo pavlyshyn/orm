@@ -3,6 +3,7 @@
 namespace Pavlyshyn;
 
 use Pavlyshyn\DB\Driver;
+use Pavlyshyn\Mapping;
 use Pavlyshyn\Annotation as Reader;
 
 class Orm {
@@ -13,7 +14,7 @@ class Orm {
     /**
      * @param Pavlyshyn\DB\Driver $driver
      */
-    public function __construct(Driver $driver) {
+    public function __construct(Driver $driver, Mapping $mapping) {
         $this->driver = $driver;
         $this->reader = Reader::getInstance();
     }

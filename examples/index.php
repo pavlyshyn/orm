@@ -3,18 +3,12 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Pavlyshyn\Orm;
-use Pavlyshyn\DB\Driver\PostgreSQL;
 use Pavlyshyn\DB\Driver\MySQL;
-use Pavlyshyn\DB\Driver\SQLite;
+use Pavlyshyn\Mapping\Annotation;
 
 use \Model\Users;
 
-use Pavlyshyn\Annotation as Reader;
-
-
-//$orm = new Orm(new PostgreSQL('localhost', 'test_orm', 'postgres', 'password'));
-
-$orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'));
+$orm = new Orm(new MySQL('localhost', 'test_orm', 'root', 'password'), new Annotation());
 
 
 
