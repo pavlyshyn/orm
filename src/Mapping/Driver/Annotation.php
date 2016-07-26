@@ -1,9 +1,17 @@
 <?php
 
-namespace Pavlyshyn\Data\Type;
+namespace Pavlyshyn\Mapping;
 
 use Pavlyshyn\Mapping\Driver;
 
-class Annotation extends Driver {
-    
+class Annotation implements Driver {
+
+    public function getTableName() {
+        
+    }
+
+    public function getFields() {
+        
+    }
+
 }
