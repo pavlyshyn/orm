@@ -4,7 +4,7 @@ namespace Pavlyshyn\Mapping;
 
 interface Driver {
 
-    public function getTableName();
+    public function getTableName($object);
 
-    public function getFields();
+    public function getFields($object);
 }

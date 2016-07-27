@@ -6,11 +6,11 @@ use Pavlyshyn\Mapping\Driver;
 
 class PHP implements Driver {
 
-    public function getTableName() {
+    public function getTableName($object) {
         
     }
 
-    public function getFields() {
+    public function getFields($object) {
         
     }
 

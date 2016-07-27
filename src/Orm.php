@@ -2,34 +2,24 @@
 
 namespace Pavlyshyn;
 
-use Pavlyshyn\DB\Driver;
-use Pavlyshyn\Mapping;
-use Pavlyshyn\Annotation as Reader;
+use Pavlyshyn\DB\Driver as DB;
+use Pavlyshyn\Mapping\Driver as Mapping;
 
 class Orm {
 
     private $driver = null;
-    private $reader = null;
+    private $mapping = null;
 
     /**
      * @param Pavlyshyn\DB\Driver $driver
      */
-    public function __construct(Driver $driver, Mapping $mapping) {
+    public function __construct(DB $driver, Mapping $mapping) {
         $this->driver = $driver;
-        $this->reader = Reader::getInstance();
+        $this->mapping = $mapping;
     }
 
     public function getDriver() {
         return $this->driver;
-    }
-
-    /**
-     * @param Pavlyshyn\Model $object
-     */
-    public function getTableName($object) {
-        $t = $this->reader->init(get_class($object));
-
-        return $t->getParameter('tableName');
     }
 
     /**
@@ -49,7 +39,7 @@ class Orm {
      * @param Pavlyshyn\Model $object
      */
     public function insert($object) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
         $props = $object->getProperties();
 
         return $this->getDriver()->insert($tableName, $props);
@@ -59,7 +49,7 @@ class Orm {
      * @param Pavlyshyn\Model $object
      */
     public function update($object) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
         $props = $object->getProperties();
 
         return $this->getDriver()->update($tableName, $props);
@@ -69,7 +59,7 @@ class Orm {
      * @param Pavlyshyn\Model $object
      */
     public function get($object) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
         $props = $object->getProperties();
         
         $data = $this->getDriver()->get($tableName, $object->getId());
@@ -87,7 +77,7 @@ class Orm {
      * @param Pavlyshyn\Model $object
      */
     public function getAll($object) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
         $dataArray = $this->getDriver()->getAll($tableName);
         $props = $object->getProperties();
 
@@ -110,13 +100,13 @@ class Orm {
      * @param Pavlyshyn\Model $object
      */
     public function deleteById($object) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
 
         return $this->getDriver()->deleteById($tableName, $object->getId());
     }
 
     public function delete($object, $rowname, $value) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
 
         return $this->getDriver()->delete($tableName, $rowname, $value);
     }
@@ -127,13 +117,13 @@ class Orm {
      * @return integer
      */
     public function count($object) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
 
         return $this->getDriver()->count($tableName);
     }
 
     public function exist($object, $rowname, $value) {
-        $tableName = $this->getTableName($object);
+        $tableName = $this->mapping->getTableName($object);
 
         return $this->getDriver()->exist($tableName, $rowname, $value);
     }

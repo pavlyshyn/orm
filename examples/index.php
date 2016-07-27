@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Pavlyshyn\Orm;
 use Pavlyshyn\DB\Driver\MySQL;
-use Pavlyshyn\Mapping\Annotation;
+use Pavlyshyn\Mapping\Driver\Annotation;
 
 use \Model\Users;
 
