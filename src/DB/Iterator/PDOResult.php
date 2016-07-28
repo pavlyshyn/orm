@@ -1,10 +1,10 @@
 <?php
 
-namespace Pavlyshyn\DB;
+namespace Pavlyshyn\DB\Iterator;
 
 use \PDO;
 
-class PDOResultIterator implements Pavlyshyn\Data\Iterator {
+class PDOResult implements Pavlyshyn\Data\Iterator {
 
     private $stmt = null;
     private $result = null;

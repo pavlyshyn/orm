@@ -1,6 +1,6 @@
 <?php
 
-namespace Pavlyshyn\Data;
+namespace Pavlyshyn\DB;
 
 /**
  * Interface for external iterators or objects that can be iterated
